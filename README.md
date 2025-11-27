@@ -18,9 +18,9 @@ demonstrates: - Multi‑Agent Architecture
 
 ------------------------------------------------------------------------
 
-## 🚀 Features
+## Features
 
-### ✓ Multi‑Agent System
+### Multi‑Agent System
 
 Your solution includes **three agents** orchestrated with a
 `SequentialAgent`: 1. **Portfolio Agent** -- analyzes weights, risk &
@@ -28,21 +28,21 @@ allocation differences.\
 2. **Rebalance Agent** -- produces BUY / SELL / HOLD recommendations.\
 3. **Final Summary Agent** -- generates a clean user-friendly summary.
 
-### ✓ Python Tools (Custom Functions)
+### Python Tools (Custom Functions)
 
 Two Python functions are registered as tools: -
 `get_stock_price_fn(ticker)` -
 `analyze_portfolio_fn(portfolio, target_alloc)`
 
-### ✓ Sessions & Memory
+### Sessions & Memory
 
 Uses `InMemorySessionService` to manage agent sessions.
 
-### ✓ ADK Runner (Async Event Processing)
+### ADK Runner (Async Event Processing)
 
 Processes agent responses using `runner.run_async()`.
 
-### ✓ Gemini Models
+###  Gemini Models
 
 All agents use:
 
