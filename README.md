@@ -1,4 +1,4 @@
-FetQuest -- Multi‑Agent Portfolio Analyzer (Google ADK)
+# FetQuest -- Multi‑Agent Portfolio Analyzer using Google ADK
 
 ## 📌 Overview
 
