@@ -2,7 +2,7 @@
 
 ## 📌 Overview
 
-FetQuest OneView is an AI‑powered portfolio analysis system built using
+FetQuest OneView is an AI‑powered Stock portfolio analysis system built using
 the **Google Agent Developer Kit (ADK)**.\
 It analyzes your stock portfolio, evaluates allocation vs. target
 distribution, computes risk, and provides BUY/SELL/HOLD
