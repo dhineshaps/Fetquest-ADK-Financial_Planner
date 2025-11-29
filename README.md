@@ -51,54 +51,7 @@ All agents use:
 ------------------------------------------------------------------------
 ## Architecture diagram
 
-                      ┌──────────────────────────────────┐
-                      │        User / UI / Streamlit       │
-                      │   "Analyze my portfolio" Query     │
-                      └────────────────────────────────────┘
-                                       │
-                                       ▼
-                     ┌──────────────────────────────────────┐
-                     │            ADK Runner                 │
-                     │  - Session Management (InMemory)     │
-                     │  - Orchestrates the SequentialAgent  │
-                     └──────────────────────────────────────┘
-                                       │
-                                       ▼
-         ┌────────────────────────────────────────────────────────────────┐
-         │                     SequentialAgent Pipeline                    │
-         └────────────────────────────────────────────────────────────────┘
-                                       │
-                                       ▼
-     ┌────────────────────┐       ┌────────────────────┐       ┌────────────────────┐
-     │  Portfolio Agent    │       │  Rebalance Agent   │       │ Final Summary Agent│
-     │ Model: Gemini Flash │       │ Model: Gemini      │       │ Model: Gemini      │
-     │ Tools:              │       │ - Reads analysis   │       │ - Human-friendly   │
-     │  • get_stock_price  │       │ - Generates BUY/   │       │   final report     │
-     │  • analyze_portfolio│       │   SELL / HOLD      │       │                    │
-     └────────────────────┘       └────────────────────┘       └────────────────────┘
-             │                            │                           │
-             ▼                            │                           │
- ┌──────────────────────┐                 │                           │
- │ Python Tools Layer   │                 │                           │
- │  get_stock_price_fn  │                 │                           │
- │  • Normalizes ticker │                 │                           │
- │  • Fetches yfinance  │                 │                           │
- │    live price, vol   │                 │                           │
- │                      │                 │                           │
- │ analyze_portfolio_fn │                 │                           │
- │  • Calculates weights│                 │                           │
- │  • Risk score        │                 │                           │
- │  • Allocation diff   │                 │                           │
- └──────────────────────┘                 │                           │
-             │                            │                           │
-             ▼                            ▼                           ▼
-       (Returns analysis)          (Returns plan)          (Returns summary)
-                                       │
-                                       ▼
-                     ┌──────────────────────────────────────┐
-                     │             Final Output              │
-                     │  Complete AI-generated portfolio     │
-                     │  analysis + rebalancing suggestions  │
-                     └──────────────────────────────────────┘
+      
+
 
 
