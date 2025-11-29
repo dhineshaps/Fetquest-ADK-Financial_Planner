@@ -49,5 +49,5 @@ if st.button("Analyze Portfolio"):
         with st.spinner("Analyzing…"):
             result = asyncio.run(run_query(query))
 
-        st.subheader("Raw Final Output")
+        st.subheader("AI Suggestion")
         st.code(result)
