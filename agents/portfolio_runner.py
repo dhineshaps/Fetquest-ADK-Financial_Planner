@@ -12,22 +12,68 @@ from google.adk.runners import Runner
 
 from google.genai import types
 from google import genai
+import yfinance as yf
 
 load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
 client = genai.Client(api_key=API_KEY)
 
 
-def get_stock_price_fn(ticker: str):
-    prices = {
-        "HDFCBANK": {"price": 1620, "volatility": 0.18},
-        "TCS": {"price": 3890, "volatility": 0.12},
-        "HDFC": {"price": 3000, "volatility": 0.15},
-    }
+def normalize_ticker(ticker: str):
+    """
+    Normalizes stock ticker:
+    - If user enters 'TCS', convert to 'TCS.NS'
+    - If user enters 'TCS.NS', keep as-is
+    - Works for all NSE symbols
+    """
+    t = ticker.upper().strip()
 
-    if ticker.upper() in prices:
-        return {"status": "success", "result": prices[ticker.upper()]}
-    return {"status": "error", "error_message": f"{ticker} not found"}
+    if t.endswith(".NS"):  # already normalized
+        print("aLREADY nORMALIZED")
+        return t
+
+    # For Indian stocks, assume NSE unless specified
+    return f"{t}.NS"
+
+
+def get_stock_price_fn(ticker: str):
+    """
+    Fetches live price + volatility using yfinance.
+    Auto-converts Indian tickers to '.NS'
+    """
+    final_ticker = normalize_ticker(ticker)
+    print(final_ticker)
+
+    try:
+        #stock = yf.Ticker(final_ticker)
+        scrip = f"{ticker}.NS"
+        stock = yf.Ticker(final_ticker)
+        info = stock.info
+
+        if "currentPrice" not in info or info["currentPrice"] is None:
+            return {"status": "error", "error_message": f"Ticker '{ticker}' not found on NSE."}
+
+        price = info["currentPrice"]
+
+        # compute volatility (1y std dev)
+        hist = stock.history(period="1y")
+        if hist.empty:
+            volatility = None
+        else:
+            returns = hist["Close"].pct_change().dropna()
+            volatility = float(returns.std())
+
+        return {
+            "status": "success",
+            "result": {
+                "ticker": final_ticker,
+                "price": float(price),
+                "volatility": volatility
+            }
+        }
+
+    except Exception as e:
+        return {"status": "error", "error_message": str(e)}
 
 
 def analyze_portfolio_fn(portfolio: dict, target_alloc: dict):
