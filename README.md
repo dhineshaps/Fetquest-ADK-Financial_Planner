@@ -51,7 +51,7 @@ All agents use:
 ------------------------------------------------------------------------
 ## Architecture diagram
 
-![FET ADK Agents Architecture](https://raw.githubusercontent.com/dhineshaps/Fetquest-ADK-Financial_Planner/main/FET%20ADK%20Agents.png)
+![FET ADK Agents Architecture](https://github.com/dhineshaps/Fetquest-ADK-Financial_Planner/blob/main/FET_ADK_Agents.png)
 
       
 
